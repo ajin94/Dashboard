@@ -1,0 +1,46 @@
+{% extends 'template_base/DashBase.html' %}
+
+{% set active_page = "nd_dash_queries" %}
+
+{% block dash_body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Queries Received</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <th>
+                                # ID
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th class="text-right">
+                                Query
+                            </th>
+                        </thead>
+                        <tbody>
+                        {% if queries_received %}
+                            {% for key, value in queries_received.items() %}
+                            <tr>
+                                <td>{{ key }}</td>
+                                <td>{{ value[0] }}</td>
+                                <td>{{ value[1] }}</td>
+                                <td>{{ value[2] }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

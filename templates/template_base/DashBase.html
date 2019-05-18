@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='assets/css/paper-dashboard.css') }}" rel="stylesheet" />
+    <title>{% block page_title %} {% endblock %}</title>
+</head>
+<body>
+
+<div class="wrapper ">
+    <div class="sidebar" data-color="white" data-active-color="danger">
+        <!--
+          Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+      -->
+        <div class="logo">
+            <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+                <div class="logo-image-small">
+                    <img src="{{ url_for('static', filename='assets/img/logo-small.png') }}">
+                </div>
+            </a>
+            <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+                NS Interiors
+            </a>
+        </div>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li class="{{ 'active' if active_page == 'nd_dash_index' else '' }}">
+                    <a href="{{ url_for('nsdash') }}">
+                        <i class="nc-icon nc-bank"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="{{ 'active' if active_page == 'nd_dash_comments' else '' }}">
+                    <a href="{{ url_for('nsdashcomments') }}">
+                        <i class="fa fa-comment"></i>
+                        <p>Comments</p>
+                    </a>
+                </li>
+                <li class="{{ 'active' if active_page == 'nd_dash_queries' else '' }}">
+                    <a href="{{ url_for('nsdashquery') }}">
+                        <i class="fa fa-question"></i>
+                        <p>Queries</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+            <div class="container-fluid">
+                <div class="navbar-wrapper">
+                    <div class="navbar-toggle">
+                        <button type="button" class="navbar-toggler">
+                            <span class="navbar-toggler-bar bar1"></span>
+                            <span class="navbar-toggler-bar bar2"></span>
+                            <span class="navbar-toggler-bar bar3"></span>
+                        </button>
+                    </div>
+                    <a class="navbar-brand" href="#pablo">NS Dashboard V.1</a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                </button>
+                <!--<div class="collapse navbar-collapse justify-content-end" id="navigation">-->
+                    <!--<form>-->
+                        <!--<div class="input-group no-border">-->
+                            <!--<input type="text" value="" class="form-control" placeholder="Search...">-->
+                            <!--<div class="input-group-append">-->
+                                <!--<div class="input-group-text">-->
+                                    <!--<i class="nc-icon nc-zoom-split"></i>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                    <!--<ul class="navbar-nav">-->
+                        <!--<li class="nav-item">-->
+                            <!--<a class="nav-link btn-magnify" href="#pablo">-->
+                                <!--<i class="nc-icon nc-layout-11"></i>-->
+                                <!--<p>-->
+                                    <!--<span class="d-lg-none d-md-block">Stats</span>-->
+                                <!--</p>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="nav-item btn-rotate dropdown">-->
+                            <!--<a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                                <!--<i class="nc-icon nc-bell-55"></i>-->
+                                <!--<p>-->
+                                    <!--<span class="d-lg-none d-md-block">Some Actions</span>-->
+                                <!--</p>-->
+                            <!--</a>-->
+                            <!--<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">-->
+                                <!--<a class="dropdown-item" href="#">Action</a>-->
+                                <!--<a class="dropdown-item" href="#">Another action</a>-->
+                                <!--<a class="dropdown-item" href="#">Something else here</a>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li class="nav-item">-->
+                            <!--<a class="nav-link btn-rotate" href="#pablo">-->
+                                <!--<i class="nc-icon nc-settings-gear-65"></i>-->
+                                <!--<p>-->
+                                    <!--<span class="d-lg-none d-md-block">Account</span>-->
+                                <!--</p>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="content">
+            {% block dash_body %} {% endblock %}
+        </div>
+        <footer class="footer footer-black  footer-white ">
+            <div class="container-fluid">
+                <div class="row">
+                    <nav class="footer-nav">
+                        <ul>
+                            <li>
+                                <a href="#" target="_blank">Home</a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">Contact</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="credits ml-auto">
+                  <span class="copyright">
+                    ©
+                    <script>
+                      document.write(new Date().getFullYear())
+                    </script>, to MangalorXpress
+                  </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/paper-dashboard.min.js') }}" type="text/javascript"></script>
+{% block custom_script %} {% endblock %}
+</body>
+</html>
