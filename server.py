@@ -7,9 +7,9 @@ from connections import get_connection_to
 import traceback
 
 dashapp = Flask(__name__)
-dashapp.secret_key = '6wfwef6ASDW676w6QDWD6748wd((FD'
+dashapp.secret_key = '6wfwef6AqwdwqdSDW676w6QDWD6748wd((FD'
 dashapp.config['SESSION_TYPE'] = 'filesystem'
-dashapp.config['WTF_CSRF_SECRET_KEY'] = 'asdaDa#$@%fewd#22342FWFQE'
+dashapp.config['WTF_CSRF_SECRET_KEY'] = 'asdaDawqdwd#$@%fewd#22342FWFQE'
 csrf = CsrfProtect()
 csrf.init_app(dashapp)
 
@@ -66,5 +66,5 @@ def nsdashquery():
     return render_template('dashpages/nsinteriors/query.html', queries_received=query_dict)
 
 
-if __name__ == "__main__":
-    dashapp.run('0.0.0.0', '9878')
+# if __name__ == "__main__":
+#     dashapp.run('0.0.0.0', '9878')
