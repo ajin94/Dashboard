@@ -48,7 +48,7 @@ def nsdashcomments():
             comment_dict = {id: (name, email, comment) for (id, name, email, comment) in data}
     except Exception as e:
         comment_dict = {}
-    return render_template('dashpages/nsinteriors/comments.html', comment_received=comment_dict)
+    return render_template('dashpages/nsinteriors/comment.html', comment_received=comment_dict)
 
 
 @dashapp.route('/nsdashquery')
