@@ -1,4 +1,4 @@
-import json, os
+import json, os, shutil
 from flask import Flask, request
 from flask import render_template
 from flask_wtf.csrf import CsrfProtect
@@ -103,14 +103,21 @@ def upload_image():
             args = (filename, int(image_for))
             cursor.execute(insert_query, args)
             conn.commit()
-            # uploading files to server
-            file_to_upload.save(os.path.join("/home/mxp/projects/Dashboard/static/images", filename))
-            file_to_upload.save(os.path.join("/home/mxp/projects/NSInteriors/static/images", filename))
-            # file_to_upload.save(os.path.join("/media/ajin/Drive/MX-Work/Dashboard/static/images", filename))
+            try:
+                # uploading files to server
+                file_to_upload.save(os.path.join("/home/mxp/projects/Dashboard/static/images", filename))
+                shutil.copy("/home/mxp/projects/Dashboard/static/images/{}".format(filename),
+                            "/home/mxp/projects/NSInteriors/static/images")
+                # local dev
+                # file_to_upload.save(os.path.join("/media/ajin/Drive/MX-Work/Dashboard/static/images", filename))
+                # shutil.copy("/media/ajin/Drive/MX-Work/Dashboard/static/images/{}".format(filename),
+                #             "/media/ajin/Drive/MX-Work/NSInterios/static/images")
+            except Exception as e:
+                pass
         except Exception as e:
             pass
     return json.dumps({"status": "OK"})
 
 
-if __name__ == "__main__":
-    dashapp.run('0.0.0.0', '9878')
+# if __name__ == "__main__":
+#     dashapp.run('0.0.0.0', '9878')
