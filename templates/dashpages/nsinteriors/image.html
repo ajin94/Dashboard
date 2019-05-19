@@ -1,0 +1,76 @@
+{% extends 'template_base/DashBase.html' %}
+
+{% set active_page = "nd_dash_image" %}
+
+{% block dash_body %}
+<div class="row">
+  <div class="col-12">
+    <div class="card demo-icons">
+      <div class="card-header">
+        <h5 class="card-title">Image Uploads</h5>
+      </div>
+      <div class="card-body all-icons">
+        <div id="icons-wrapper">
+          <section>
+            <div class="row">
+                <div class="col-md-2 col-sm-4 col-xs-5">
+                    <img src="{{ url_for('static', filename='images/addimage.jpg')}}" alt="IMG-BANNER"
+                    class="img-fluid" id="image_upload_image_button">
+                </div>
+                {% for id, data in template_info['image_info'].items() %}
+                    <div class="col-md-2 col-sm-4 col-xs-5">
+                        <img src="/static/images/{{ data[0] }}" alt="IMG-BANNER"
+                        class="img-fluid">
+                    </div>
+                {% endfor %}
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal-->
+<div class="modal fade" id="image_upload_modal" tabindex="-1" role="dialog" aria-labelledby="image_upload_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top:20vh !important;">
+        <div class="modal-content" style="border-radius:16px;">
+            <div class="modal-header" style="border-bottom:0px;">
+                <h5 class="modal-title w-100 text-center" id="image_upload_modal_label">Select image to upload !</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <form id="image_upload_form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="image_file">User Name or Email address</label>
+                    <input type="file" class="form-control" id="image_file" name="image_files"
+                           placeholder="Upload files">
+                   <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+                <div class="form-group">
+                    <label for="image_for_select">Image for</label>
+                    <select class="form-control" id="image_for_select" name="image_category">
+                      <option value="0">Select any</option>
+                      {% if template_info['category_info'] %}
+                        {% for id, category in template_info['category_info'].items() %}
+                        <option value="{{ id }}">{{ category }}</option>
+                        {% endfor %}
+                      {% endif %}
+                    </select>
+                </div>
+                <div class="w-100 text-right">
+                  <button type="button" class="btn btn-primary" id="upload_image_button">Confirm & Upload</button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block custom_script %}
+<script src="{{ url_for('static', filename='assets/js/image-script.js') }}"></script>
+{% endblock %}
