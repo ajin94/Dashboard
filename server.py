@@ -104,9 +104,9 @@ def upload_image():
             cursor.execute(insert_query, args)
             conn.commit()
             # uploading files to server
-            # file_val.save(os.path.join("/home/mxp/projects/Dashboard/static/images", filename))
-            # file_val.save(os.path.join("/home/mxp/projects/NSInteriors/static/images", filename))
-            file_to_upload.save(os.path.join("/media/ajin/Drive/MX-Work/Dashboard/static/images", filename))
+            file_to_upload.save(os.path.join("/home/mxp/projects/Dashboard/static/images", filename))
+            file_to_upload.save(os.path.join("/home/mxp/projects/NSInteriors/static/images", filename))
+            # file_to_upload.save(os.path.join("/media/ajin/Drive/MX-Work/Dashboard/static/images", filename))
         except Exception as e:
             pass
     return json.dumps({"status": "OK"})
