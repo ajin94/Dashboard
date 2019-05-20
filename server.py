@@ -138,7 +138,7 @@ def delete_image():
         else:
             try:
                 os.remove("/home/mxp/projects/Dashboard/static/images/{}".format(image_name))
-                os.remove("/home/mxp/projects/NSInterios/static/images/{}".format(image_name))
+                os.remove("/home/mxp/projects/NSInteriors/static/images/{}".format(image_name))
                 # local
                 # os.remove("/media/ajin/Drive/MX-Work/Dashboard/static/images/{}".format(image_name))
                 # os.remove("/media/ajin/Drive/MX-Work/NSInterios/static/images/{}".format(image_name))
