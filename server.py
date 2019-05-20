@@ -107,13 +107,13 @@ def upload_image():
             conn.commit()
             try:
                 # uploading files to server
-                # file_to_upload.save(os.path.join("/home/mxp/projects/Dashboard/static/images", filename))
-                # shutil.copy("/home/mxp/projects/Dashboard/static/images/{}".format(filename),
-                #             "/home/mxp/projects/NSInteriors/static/images")
+                file_to_upload.save(os.path.join("/home/mxp/projects/Dashboard/static/images", filename))
+                shutil.copy("/home/mxp/projects/Dashboard/static/images/{}".format(filename),
+                            "/home/mxp/projects/NSInteriors/static/images")
                 # local dev
-                file_to_upload.save(os.path.join("/media/ajin/Drive/MX-Work/Dashboard/static/images", filename))
-                shutil.copy("/media/ajin/Drive/MX-Work/Dashboard/static/images/{}".format(filename),
-                            "/media/ajin/Drive/MX-Work/NSInterios/static/images")
+                # file_to_upload.save(os.path.join("/media/ajin/Drive/MX-Work/Dashboard/static/images", filename))
+                # shutil.copy("/media/ajin/Drive/MX-Work/Dashboard/static/images/{}".format(filename),
+                #             "/media/ajin/Drive/MX-Work/NSInterios/static/images")
             except Exception as e:
                 pass
         except Exception as e:
