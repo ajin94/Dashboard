@@ -13,15 +13,21 @@
         <div id="icons-wrapper">
           <section>
             <div class="row">
-                <div class="col-md-2 col-sm-4 col-xs-5">
+                <div class="col-md-2 col-sm-4 col-xs-5 mt-4 p-4 text-center">
                     <img src="{{ url_for('static', filename='images/addimage.jpg')}}" alt="IMG-BANNER"
-                    class="img-fluid" id="image_upload_image_button">
+                    class="img-fluid cursor-pointer w-50" id="image_upload_image_button">
                 </div>
                 {% for id, data in template_info['image_info'].items() %}
-                    <div class="col-md-2 col-sm-4 col-xs-5">
-                        <img src="/static/images/{{ data[0] }}" alt="IMG-BANNER"
-                        class="img-fluid">
-                    </div>
+                <div class="col-md-2 col-sm-4 col-xs-5 mt-4">
+                    <img src="/static/images/{{ data[0] }}" alt="IMG-BANNER"
+                    class="img-fluid image_content view_image">
+                    <h4 class="mb-0 mt-1 text-center">
+                        <i class="fa fa-trash delete_image">
+                            <input type="hidden" class="image_id" value="{{ id }}"/>
+                            <input type="hidden" class="image_name" value="{{ data[0] }}"/>
+                        </i>
+                    </h4>
+                </div>
                 {% endfor %}
             </div>
           </section>
@@ -32,11 +38,11 @@
 </div>
 
 <!--modal-->
-<div class="modal fade" id="image_upload_modal" tabindex="-1" role="dialog" aria-labelledby="image_upload_modal_label" aria-hidden="true">
+<div class="modal fade" id="image_upload_modal" tabindex="-1" role="dialog" aria-labelledby="delete_image_warning_modal_label" aria-hidden="true">
     <div class="modal-dialog" role="document" style="margin-top:20vh !important;">
         <div class="modal-content" style="border-radius:16px;">
             <div class="modal-header" style="border-bottom:0px;">
-                <h5 class="modal-title w-100 text-center" id="image_upload_modal_label">Select image to upload !</h5>
+                <h5 class="modal-title w-100 text-center" id="delete_image_warning_modal_label">Select image to upload !</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -64,6 +70,46 @@
                   <button type="button" class="btn btn-primary" id="upload_image_button">Confirm & Upload</button>
                 </div>
               </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete_image_warning_modal" tabindex="-1" role="dialog" 
+     aria-labelledby="delete_image_warning_modal_label" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top:20vh !important;">
+        <div class="modal-content" style="border-radius:16px;">
+            <div class="modal-header" style="border-bottom:0px;">
+                <h5 class="modal-title w-100 text-center" id="delete_image_warning_modal_label">Confirm delete action</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="hidden" id="image_name"/>
+            <input type="hidden" id="image_id"/>
+            <div class="modal-body">
+                <h5 id="message" class="my-0">Delete selected image ?</h5>
+                <div class="text-center">
+                    <button class="btn btn-danger" id="confirm_delete">Delete</button>
+                    <button class="btn btn-warning" id="cancel_delete" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="image_display" tabindex="-1" role="dialog" aria-labelledby="image_display_label" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top:25vh !important;">
+        <div class="modal-content" style="border-radius:0px;">
+            <div class="modal-header" style="border-bottom:0px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <img class="d-block w-100" id="max-image" src="" alt="Second slide">
+                </div>
             </div>
         </div>
     </div>

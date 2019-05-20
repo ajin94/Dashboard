@@ -187,3 +187,23 @@
   outline: none;
   display: none;
 }
+
+.delete_image{
+    cursor:pointer;
+}
+
+.delete_image:hover{
+    color:red;
+}
+
+.view_image{
+    cursor:pointer;
+}
+
+.view_image:hover{
+    color:orange;
+}
+
+.cursor-pointer{
+    cursor:pointer !important;
+}

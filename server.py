@@ -3,6 +3,8 @@ from flask import Flask, request
 from flask import render_template
 from flask_wtf.csrf import CsrfProtect
 from connections import get_connection_to
+import traceback
+
 
 dashapp = Flask(__name__)
 dashapp.secret_key = '6wfwef6AqwdwqdSDW676w6QDWD6748wd((FD'
@@ -105,17 +107,44 @@ def upload_image():
             conn.commit()
             try:
                 # uploading files to server
-                file_to_upload.save(os.path.join("/home/mxp/projects/Dashboard/static/images", filename))
-                shutil.copy("/home/mxp/projects/Dashboard/static/images/{}".format(filename),
-                            "/home/mxp/projects/NSInteriors/static/images")
+                # file_to_upload.save(os.path.join("/home/mxp/projects/Dashboard/static/images", filename))
+                # shutil.copy("/home/mxp/projects/Dashboard/static/images/{}".format(filename),
+                #             "/home/mxp/projects/NSInteriors/static/images")
                 # local dev
-                # file_to_upload.save(os.path.join("/media/ajin/Drive/MX-Work/Dashboard/static/images", filename))
-                # shutil.copy("/media/ajin/Drive/MX-Work/Dashboard/static/images/{}".format(filename),
-                #             "/media/ajin/Drive/MX-Work/NSInterios/static/images")
+                file_to_upload.save(os.path.join("/media/ajin/Drive/MX-Work/Dashboard/static/images", filename))
+                shutil.copy("/media/ajin/Drive/MX-Work/Dashboard/static/images/{}".format(filename),
+                            "/media/ajin/Drive/MX-Work/NSInterios/static/images")
             except Exception as e:
                 pass
         except Exception as e:
             pass
+    return json.dumps({"status": "OK"})
+
+
+@dashapp.route('/_delete_image', methods=["POST"])
+def delete_image():
+    image_name = request.form.get('image_name', None)
+    image_id = int(request.form.get('image_id', None))
+
+    if image_name and image_id:
+        try:
+            cursor, conn = get_connection_to('nsi')
+            delete_query = "DELETE FROM image WHERE id=%s"
+            args = (image_id,)
+            cursor.execute(delete_query, args)
+            conn.commit()
+        except Exception as e:
+            return json.dumps({"status": str(traceback.format_exc())})
+        else:
+            try:
+                os.remove("/home/mxp/projects/Dashboard/static/images/{}".format(image_name))
+                os.remove("/home/mxp/projects/NSInterios/static/images/{}".format(image_name))
+                # local
+                # os.remove("/media/ajin/Drive/MX-Work/Dashboard/static/images/{}".format(image_name))
+                # os.remove("/media/ajin/Drive/MX-Work/NSInterios/static/images/{}".format(image_name))
+            except Exception as e:
+                return json.dumps({"status": str(traceback.format_exc())})
+
     return json.dumps({"status": "OK"})
 
 
