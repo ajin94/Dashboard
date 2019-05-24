@@ -4,7 +4,7 @@ from flask import render_template
 from flask_wtf.csrf import CsrfProtect
 from connections import get_connection_to
 import traceback
-
+from PIL import Image
 
 dashapp = Flask(__name__)
 dashapp.secret_key = '6wfwef6AqwdwqdSDW676w6QDWD6748wd((FD'
@@ -105,15 +105,19 @@ def upload_image():
             args = (filename, int(image_for))
             cursor.execute(insert_query, args)
             conn.commit()
+            # dash_path_string = "/media/ajin/Drive/MX-Work/Dashboard/static/images"
+            # ns_path_string = "/media/ajin/Drive/MX-Work/NSInterios/static/images"
+            dash_path_string = "/home/mxp/projects/Dashboard/static/images"
+            ns_path_string = "/home/mxp/projects/NSInteriors/static/images"
             try:
                 # uploading files to server
-                file_to_upload.save(os.path.join("/home/mxp/projects/Dashboard/static/images", filename))
-                shutil.copy("/home/mxp/projects/Dashboard/static/images/{}".format(filename),
-                            "/home/mxp/projects/NSInteriors/static/images")
-                # local dev
-                # file_to_upload.save(os.path.join("/media/ajin/Drive/MX-Work/Dashboard/static/images", filename))
-                # shutil.copy("/media/ajin/Drive/MX-Work/Dashboard/static/images/{}".format(filename),
-                #             "/media/ajin/Drive/MX-Work/NSInterios/static/images")
+                file_to_upload.save(os.path.join(dash_path_string, filename))
+                file_name_string = "{0}/{1}".format(dash_path_string, filename)
+                # resizing image with python
+                image_obj = Image.open(file_name_string)
+                quality_val = 90
+                image_obj.save(file_name_string, 'JPEG', quality=quality_val)
+                shutil.copy(file_name_string, ns_path_string)
             except Exception as e:
                 pass
         except Exception as e:
@@ -136,12 +140,13 @@ def delete_image():
         except Exception as e:
             return json.dumps({"status": str(traceback.format_exc())})
         else:
+            # dash_path_string = "/media/ajin/Drive/MX-Work/Dashboard/static/images"
+            # ns_path_string = "/media/ajin/Drive/MX-Work/NSInterios/static/images"
+            dash_path_string = "/home/mxp/projects/Dashboard/static/images"
+            ns_path_string = "/home/mxp/projects/NSInteriors/static/images"
             try:
-                os.remove("/home/mxp/projects/Dashboard/static/images/{}".format(image_name))
-                os.remove("/home/mxp/projects/NSInteriors/static/images/{}".format(image_name))
-                # local
-                # os.remove("/media/ajin/Drive/MX-Work/Dashboard/static/images/{}".format(image_name))
-                # os.remove("/media/ajin/Drive/MX-Work/NSInterios/static/images/{}".format(image_name))
+                os.remove("{0}/{1}".format(dash_path_string, image_name))
+                os.remove("{0}/{1}".format(ns_path_string,image_name))
             except Exception as e:
                 return json.dumps({"status": str(traceback.format_exc())})
 
