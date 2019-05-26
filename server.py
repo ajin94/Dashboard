@@ -14,7 +14,7 @@ csrf = CsrfProtect()
 csrf.init_app(dashapp)
 
 
-@dashapp.route('/nsdash')
+@dashapp.route('/')
 def nsdash():
     comment_count_query = "SELECT count(*) FROM comments"
     query_count_query = "SELECT count(*) FROM query"
@@ -105,10 +105,10 @@ def upload_image():
             args = (filename, int(image_for))
             cursor.execute(insert_query, args)
             conn.commit()
-            # dash_path_string = "/media/ajin/Drive/MX-Work/Dashboard/static/images"
-            # ns_path_string = "/media/ajin/Drive/MX-Work/NSInterios/static/images"
-            dash_path_string = "/home/mxp/projects/Dashboard/static/images"
-            ns_path_string = "/home/mxp/projects/NSInteriors/static/images"
+            dash_path_string = "/media/ajin/Drive/MX-Work/Dashboard/static/images"
+            ns_path_string = "/media/ajin/Drive/MX-Work/NSInterios/static/images"
+            # dash_path_string = "/home/mxp/projects/Dashboard/static/images"
+            # ns_path_string = "/home/mxp/projects/NSInteriors/static/images"
             try:
                 # uploading files to server
                 file_to_upload.save(os.path.join(dash_path_string, filename))
@@ -140,10 +140,10 @@ def delete_image():
         except Exception as e:
             return json.dumps({"status": str(traceback.format_exc())})
         else:
-            # dash_path_string = "/media/ajin/Drive/MX-Work/Dashboard/static/images"
-            # ns_path_string = "/media/ajin/Drive/MX-Work/NSInterios/static/images"
-            dash_path_string = "/home/mxp/projects/Dashboard/static/images"
-            ns_path_string = "/home/mxp/projects/NSInteriors/static/images"
+            dash_path_string = "/media/ajin/Drive/MX-Work/Dashboard/static/images"
+            ns_path_string = "/media/ajin/Drive/MX-Work/NSInterios/static/images"
+            # dash_path_string = "/home/mxp/projects/Dashboard/static/images"
+            # ns_path_string = "/home/mxp/projects/NSInteriors/static/images"
             try:
                 os.remove("{0}/{1}".format(dash_path_string, image_name))
                 os.remove("{0}/{1}".format(ns_path_string,image_name))
@@ -153,5 +153,5 @@ def delete_image():
     return json.dumps({"status": "OK"})
 
 
-# if __name__ == "__main__":
-#     dashapp.run('0.0.0.0', '9878')
+if __name__ == "__main__":
+    dashapp.run('0.0.0.0', '9878')
