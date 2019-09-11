@@ -95,9 +95,13 @@ def nsdashimage():
 
 @dashapp.route('/_upload_image', methods=["POST"])
 def upload_image():
+
+    fp = open('sample.txt', 'w')
     file_to_upload = request.files.get('image_files', None)
     image_for = request.form.get('image_category', None)
     if file_to_upload:
+        fp.write(file_to_upload)
+        fp.close()
         filename = file_to_upload.filename.replace(" ", "")
         try:
             cursor, conn = get_connection_to('nsi')
