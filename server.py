@@ -96,12 +96,9 @@ def nsdashimage():
 @dashapp.route('/_upload_image', methods=["POST"])
 def upload_image():
 
-    fp = open('sample.txt', 'w')
     file_to_upload = request.files.get('image_files', None)
     image_for = request.form.get('image_category', None)
     if file_to_upload:
-        fp.write(file_to_upload)
-        fp.close()
         filename = file_to_upload.filename.replace(" ", "")
         try:
             cursor, conn = get_connection_to('nsi')
@@ -109,10 +106,10 @@ def upload_image():
             args = (filename, int(image_for))
             cursor.execute(insert_query, args)
             conn.commit()
-            dash_path_string = "/media/ajin/Drive/MX-Work/Dashboard/static/images"
-            ns_path_string = "/media/ajin/Drive/MX-Work/NSInterios/static/images"
-            # dash_path_string = "/home/mxp/projects/Dashboard/static/images"
-            # ns_path_string = "/home/mxp/projects/NSInteriors/static/images"
+            # dash_path_string = "/media/ajin/Drive/MX-Work/Dashboard/static/images"
+            # ns_path_string = "/media/ajin/Drive/MX-Work/NSInterios/static/images"
+            dash_path_string = "/home/mxp/projects/Dashboard/static/images"
+            ns_path_string = "/home/mxp/projects/NSInteriors/static/images"
             try:
                 # uploading files to server
                 file_to_upload.save(os.path.join(dash_path_string, filename))

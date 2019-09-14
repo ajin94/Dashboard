@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     $("#image_file").on("change", function() {
       var fileName = $(this).val().split("\\").pop();
       $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -20,6 +21,8 @@ $(document).ready(function(){
                 cache: false,
                 processData:false,
                 success:function(response){
+                    $("#image_upload_modal").modal('hide');
+                    $('#myModal').modal();
                     if (response.status == "OK"){
                         location.reload();
                     }else if (response.status == "ERROR"){
